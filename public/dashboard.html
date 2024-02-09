@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="script.js"></script>
+  <title>Dashboard</title>
+</head>
+<body>
+  <div id="dashboard">
+    
+  <div id="app">
+    <h1>Alumni Tracking System</h1>
+    <form id="alumniForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="graduationYear">Graduation Year:</label>
+      <input type="number" id="graduationYear" name="graduationYear" required>
+
+      <label for="major">Major:</label>
+      <input type="text" id="major" name="major">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <button type="submit" id="add">Add Alumni</button>
+    </form>
+
+  </div>
+
+    <div id="alumniList">
+        <!-- Alumni list will be displayed here -->
+      </div>
+    <!-- Add content specific to the dashboard -->
+  <script src="script.js"></script>
+</body>
+</html>
