@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="shortcut icon" href="PFP-modified.png" type="image/x-icon">
   <style>
    
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
@@ -257,24 +258,10 @@ footer a {
             <li><a href="register.html">Register</a></li>
         </ul>
     </nav>
-
+	
     <div class="container" id="container">
-        <!-- Alumni Login Form -->
-        <div class="form-container sign-up-container">
-            <form id="alumniLoginForm">
-                <h1>Alumni Login</h1>
-                <label for="alumniEmail">Email:</label>
-                <input type="email" id="alumniEmail" name="email" required>
-                <label for="alumniPassword">Password:</label>
-                <input type="password" id="alumniPassword" name="password" required>
-                <div id="alumni-error-message" style="color: red;"></div>
-                <button type="submit">Login</button>
-                <span>or click for registration</span>
-            </form>
-        </div>
-
-        <!-- Admin Login Form -->
-        <div class="form-container sign-in-container">
+		 <!-- Admin Login Form -->
+		<div class="form-container sign-up-container">
             <form id="adminLoginForm">
                 <h1>Admin Login</h1>
                 <label for="adminEmail">Email:</label>
@@ -286,19 +273,37 @@ footer a {
                 <a href="#">Forgot your password?</a>
             </form>
         </div>
+        <!-- Alumni Login Form -->
+        <div class="form-container sign-in-container">
+            <form id="alumniLoginForm">
+                <h1>Alumni Login</h1>
+                <label for="alumniEmail">Email:</label>
+                <input type="email" id="alumniEmail" name="email" required>
+                <label for="alumniPassword">Password:</label>
+                <input type="password" id="alumniPassword" name="password" required>
+                <div id="alumni-error-message" style="color: red;"></div>
+                <button type="submit">Login</button>
+                <p>Not a member?<a href="register.html">Register Now</a> </p>
+            </form>
+        </div>
+
+       
+        
 
         
 			<div class="overlay-container">
 				<div class="overlay">
 					<div class="overlay-panel overlay-left">
-						<h1>Welcome Back!</h1>
-						<p>To keep connected with us please login with your personal info</p>
-						<button class="ghost" id="signIn">Admin</button>
+						<h1>Welcome, Admin!</h1>
+						<p>Please provide your login information to access the exclusive Admin network.</p>
+						<button class="ghost" id="signIn">Alumni</button>
+						<p>Are you an Alumni? Click above to login to enjoy your alumni community.</p>
 					</div>
 					<div class="overlay-panel overlay-right">
-						<h1>Hello, Friend!</h1>
-						<p>Enter your personal details and start journey with us</p>
-						<button class="ghost" id="signUp">Alumni</button>
+						<h1>Welcome, Friend!</h1>
+						<p>Embark on a journey with us as an esteemed member of our alumni community.</p>
+						<button class="ghost" id="signUp">Admin</button>
+						<p>Are you an Admin? Click above to login and start managing our alumni community.</p>
 					</div>
 				</div>
 			

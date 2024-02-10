@@ -1,23 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('adminLoginForm');
-    const alumniloginForm = document.getElementById('alumniLoginForm');
     loginForm.addEventListener('submit', (event) => {
       event.preventDefault();
-  
       const formData = new FormData(loginForm);
-      const alumniformData = new FormData(alumniloginForm);
       const userData = {};
-      const userata = {};
       formData.forEach((value, key) => {
         userData[key] = value;
       });
-      alumniformData.forEach((value, key) => {
-        userata[key] = value;
-      });
+      
   
       // Log in the user
       loginUser(userData);
-      loginUser(userata);
     });
   
     // API to login
