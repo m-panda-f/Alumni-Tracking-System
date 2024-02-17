@@ -94,12 +94,11 @@ app.delete('/api/alumni/:id', (req, res) => {
 });
 
 // ... (rest of the code)
-
-
 // ... (existing code)
 
 // Passport configuration
 passport.use(
+  'userLocal',
   new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
     db.query('SELECT * FROM users WHERE username = ?', [email], (err, results) => {
       if (err) return done(err);
@@ -123,70 +122,81 @@ passport.use(
   })
 );
 
-const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'panda2347', // Replace with a strong, random secret key
-};
-
 passport.use(
-  new JwtStrategy(jwtOptions, (payload, done) => {
-    db.query('SELECT * FROM users WHERE id = ?', [payload.id], (err, results) => {
+  'alumniLocal',
+  new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+    db.query('SELECT * FROM alumnio WHERE username = ? OR mail = ?', [email, email], (err, results) => {
       if (err) return done(err);
 
       if (results.length === 0) {
-        return done(null, false);
+        return done(null, false, { message: 'Incorrect email or password' });
       }
 
       const user = results[0];
-      return done(null, user);
+
+      if (!user.password) {
+        console.log('User has no password:', user);
+        return done(null, false, { message: 'Incorrect email or password' });
+      }
+
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) return done(err);
+
+        if (isMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: 'Incorrect email or password' });
+        }
+      });
     });
   })
 );
-
-// Initialize passport
-app.use(passport.initialize());
-
-// Authentication middleware
-const authenticate = passport.authenticate('local', { session: false });
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const jwtOptions = {
+  secretOrKey:'panda2347',
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+};
 // ... (existing code)
 
 // API to login
-// ... (existing code)
-
-// API to login
-app.post('/api/login', authenticate, (req, res) => {
+app.post('/api/login', passport.authenticate('userLocal', { session: false }), (req, res) => {
   const token = jwt.sign({ id: req.user.id }, jwtOptions.secretOrKey);
   res.json({ token });
 });
 
-// API to get current user (requires authentication)
-app.get('/api/user', requireAuth, (req, res) => {
-  res.json(req.user);
+app.post('/api/alumnilogin', passport.authenticate('alumniLocal', { session: false }), (req, res) => {
+  const token = jwt.sign({ id: req.user.id }, jwtOptions.secretOrKey);
+  res.json({ token });
 });
 
 // ... (existing code)
 
+// ... (existing code)
+// API to get current user (requires authentication)
+
+
+// ... (existing code)
+
 // Serve the dashboard page
-app.get('/dashboard', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/dashboard.html'));
-});
+
 
 
 // ... (existing code)
 // API to register a new user
 app.post('/api/register', (req, res) => {
-  const { email, password } = req.body;
+  const { username, mail, password } = req.body;
 
   // Hash the password before storing it
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) throw err;
 
-    const insertQuery = `INSERT INTO users (username, password) VALUES (?, ?)`;
-    db.query(insertQuery, [email, hash], (err, results) => {
-      if (err) throw err;
-      res.json({ message: 'User registered successfully' });
-    });
-  });
-});
+    const insertQuery = `INSERT INTO alumnio (username, mail ,password) VALUES (?, ?, ?)`;
+    db.query(insertQuery, [username, mail, hash], (err, results) => {
+      if (err) {
+        res.status(500).json({ message: 'An error occurred during registration' });
+      } else {
+        console.log('You have successfully registered');
+        res.json({ message: 'You have successfully registered' });
+      }})
+    })});
+
+   

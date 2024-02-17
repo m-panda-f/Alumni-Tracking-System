@@ -68,7 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function displayAlumni(alumni) {
-    alumniList.innerHTML = '';
+
+    const alumniList = document.getElementById('alumniList');
+        alumniList.innerHTML = '';
 
     alumni.forEach((alum) => {
       const alumniItem = document.createElement('div');
@@ -76,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
        alumniItem.setAttribute('data-id', alum.id); 
       alumniItem.innerHTML = `
         <strong>${alum.name}</strong> - ${alum.graduationYear} - ${alum.major || 'N/A'} - ${alum.email}
-        <button onclick="editAlumni(${alum.id})">Edit</button>
+        <br><button onclick="editAlumni(${alum.id})">Edit</button>
         <button onclick="deleteAlumni(${alum.id})">Delete</button>`;
       alumniList.appendChild(alumniItem);
     });
@@ -109,7 +111,7 @@ async function postData(url, method, data) {
 async function editAlumni(id) {
   try {
     const alum = await fetchData(`/api/alumni/${id}`);
-    const alumniForm = document.getElementById('alumniForm');
+    const alumniForm = document.getElementById('alumniorm');
     alumniForm.elements['name'].value = alum.name;
     alumniForm.elements['graduationYear'].value = alum.graduation_year;
     alumniForm.elements['major'].value = alum.major || '';
@@ -120,12 +122,23 @@ async function editAlumni(id) {
     idField.type = 'hidden';
     idField.name = 'id';
     idField.value = alum.id;
+    document.getElementById('alumniId').value = alum.id;
+            openPopup();
     alumniForm.appendChild(idField);
   } catch (error) {
     console.error('Error:', error);
   }
 }
-
+document.getElementById("alumniorm").addEventListener("submit", async function(event) {
+  event.preventDefault(); // Prevent default form submission
+  const formData = new FormData(this);
+  const data = {};
+  for (const [key, value] of formData.entries()) {
+      data[key] = value;
+  }
+  updateAlumni(data) // You can now handle the form data as needed (e.g., send it to the server)
+  closePopup(); // Close the popup after form submission
+});
 function deleteAlumni(id) {
   fetch(`/api/alumni/${id}`, {
     method: 'DELETE',
@@ -151,4 +164,43 @@ async function registerUser(userData) {
     console.error('Error:', error);
   }
 }
- 
+
+document.addEventListener('DOMContentLoaded', () => {
+  // ... (existing code)
+
+  const alumniList = document.getElementById('alumniList');
+  const searchInput = document.getElementById('search');
+
+  // Fetch all alumni on page load
+  fetchAlumni();
+
+  // Search alumni when user types in the search input
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    filterAlumni(searchTerm);
+  });
+
+  // Function to fetch all alumni
+  function fetchAlumni() {
+    fetch('/api/alumni')
+      .then((response) => response.json())
+      .then((alumni) => {
+        displayAlumni(alumni);
+      });
+  }
+
+  // Function to filter alumni based on search term
+  function filterAlumni(searchTerm) {
+    const alumniItems = alumniList.getElementsByClassName('alumni-item');
+    Array.from(alumniItems).forEach((alumniItem) => {
+      const alumniName = alumniItem.textContent.toLowerCase();
+      if (alumniName.includes(searchTerm)) {
+        alumniItem.style.display = 'block';
+      } else {
+        alumniItem.style.display = 'none';
+      }
+    });
+  }
+
+  // ... (existing code)
+});

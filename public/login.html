@@ -42,29 +42,51 @@ a {
 	margin: 15px 0;
 }
 
-button {
-	border-radius: 20px;
-	border: 1px solid #FF4B2B;
-	background-color: #d46957;
-	color: #FFFFFF;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 45px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	transition: transform 80ms ease-in;
-}
-
-button:active {
-	transform: scale(0.95);
-}
-
-button:focus {
-	outline: none;
-}
-
+.ghost {
+	background: rgb(10%, 10%, 10%);
+	padding: 16px 24px;
+	width: 170px;
+	position: relative;
+	box-shadow: 0 0 0 1px rgba(0,0,0,.01);
+  
+	&::after {
+	  position: absolute;
+	  content: "";
+	  top: 15px;
+	  left: 0;
+	  right: 0;
+	  z-index: -1;
+	  height: 100%;
+	  width: 100%;
+	  transform: scale(0.9) translateZ(0);
+	  filter: blur(15px);
+	  background: linear-gradient(
+		to left,
+		#ff5770,
+		#e4428d,
+		#c42da8,
+		#9e16c3,
+		#6501de,
+		#9e16c3,
+		#c42da8,
+		#e4428d,
+		#ff5770
+	  );
+	  background-size: 200% 200%;
+	  animation: animateGlow 1.25s linear infinite;
+	}
+  }
+  
+  @keyframes animateGlow {
+	0% {
+	  background-position: 0% 50%;
+	}
+	100% {
+	  background-position: 200% 50%;
+	}
+  }
 button.ghost {
-	background-color: transparent;
+	border-radius: 20px;
 	border-color: #FFFFFF;
 }
 
@@ -160,7 +182,7 @@ input {
 .overlay {
 	background: #FF416C;
 	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-	background: linear-gradient(to bottom right,rgb(193, 157, 157),#8e8ef3,#6a85cd, #316dd4, #1a0e88);
+	background: linear-gradient(to bottom right,#c19d9d,#8e8ef3,#6a85cd, #316dd4, #1a0e88);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -224,30 +246,6 @@ input {
 	width: 40px;
 }
 
-footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
-}
   </style>
 </head>
 <body>
@@ -268,7 +266,7 @@ footer a {
                 <input type="email" id="adminEmail" name="email" required>
                 <label for="adminPassword">Password:</label>
                 <input type="password" id="adminPassword" name="password" required>
-                <div id="admin-error-message" style="color: red;"></div>
+                <div id="error-message" style="color: red;"></div>
                 <button type="submit">Login</button>
                 <a href="#">Forgot your password?</a>
             </form>
@@ -278,11 +276,11 @@ footer a {
             <form id="alumniLoginForm">
                 <h1>Alumni Login</h1>
                 <label for="alumniEmail">Email:</label>
-                <input type="email" id="alumniEmail" name="email" required>
+                <input type="text" id="alumniEmail" name="email" required>
                 <label for="alumniPassword">Password:</label>
                 <input type="password" id="alumniPassword" name="password" required>
-                <div id="alumni-error-message" style="color: red;"></div>
-                <button type="submit">Login</button>
+                <div id="error-message" style="color: red;"></div>
+                <button type="submit" >Login</button>
                 <p>Not a member?<a href="register.html">Register Now</a> </p>
             </form>
         </div>
@@ -325,7 +323,41 @@ footer a {
 	signInButton.addEventListener('click', () => {
 		container.classList.remove("right-panel-active");
 	});
+	document.addEventListener('DOMContentLoaded', () => {
+		const alumniloginForm = document.getElementById('alumniLoginForm');
+		alumniloginForm.addEventListener('submit', (event) => {
+		  event.preventDefault();
+		  const formData = new FormData(alumniloginForm);
+		  const userd = {};
+		  formData.forEach((value, key) => {
+			userd[key] = value;
+		  });
+		alumnilogin(userd)
+		});
 	
+		  function alumnilogin(user){
+			fetch('/api/alumnilogin', {
+			  method: 'POST',
+			  headers: {
+				'Content-Type': 'application/json',
+			  },
+			  body: JSON.stringify(user),
+			})
+			  .then((response) => response.json())
+			  .then((result) => {
+				console.log(result);
+				// Store the token in localStorage or a secure way in your application
+				const { token } = result;
+		
+				// Check if the token is present
+				if (token) {
+				  // Redirect to the dashboard page
+				  window.location.href = '/index.html';
+				} else {
+				  document.getElementById('error-message').textContent = 'Username or password is incorrect!';
+				}
+			  });
+			}});
 	
 	  </script>
 </body>

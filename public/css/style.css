@@ -152,6 +152,18 @@ a:hover{
     cursor: pointer;
   }
   
+  button {
+    border-radius: 20px;
+    border: 1px solid #00e2fb;
+    background-color: #57a4d4;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+  }
   button:hover {
     background: linear-gradient(to right,  #ff007f, #bf31d4);
   }

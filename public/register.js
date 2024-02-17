@@ -4,12 +4,20 @@ document.addEventListener('DOMContentLoaded', () => {
     registerForm.addEventListener('submit', (event) => {
       event.preventDefault();
   
+      
+      const password = document.getElementById("registerPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+  
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        registerForm.reset();
+        return;
+      }
       const formData = new FormData(registerForm);
       const userData = {};
       formData.forEach((value, key) => {
         userData[key] = value;
       });
-  
       // Register a new user
       registerUser(userData);
   
@@ -29,6 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then((response) => response.json())
         .then((result) => {
           console.log(result.message);
+          alert("You have successfully registered");
+          window.location.href = '/login.html';
+          
         });
     }
   });

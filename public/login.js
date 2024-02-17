@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('adminLoginForm');
+
     loginForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const formData = new FormData(loginForm);
@@ -38,4 +39,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
   });
-  
