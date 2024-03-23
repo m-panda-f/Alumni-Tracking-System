@@ -1,0 +1,331 @@
+body {
+    height: 100vh;
+    margin: 0;
+    z-index: 1;
+    background: linear-gradient(to bottom right,rgb(193, 157, 157),#8e8ef3,#6a85cd, #316dd4, #1a0e88);
+    background-color: linear-gradient(to right, #3494e6, #ec6ead);
+}
+nav{
+  z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    padding: 10px;
+    text-align: center;
+    transition: background-color 0.3s;
+    /* background: linear-gradient(to right, #bf31d4, #ff007f); */
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+nav:hover::before {
+  cursor: pointer;
+  top: 0;
+}
+nav::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff94; /* Change this to the desired color */
+  transition: top 1s;
+  z-index: -1;
+}
+a{
+  text-decoration: none;
+  font-size: 17px;
+  color: black;
+}
+nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+nav ul li a{
+    margin: 0 10px;
+    padding: 10px;
+    color: black;
+    font-size: 20px;
+    font-family: fantasy;
+    text-decoration: none;
+    transition: 0.5s;
+}a:hover{
+  cursor: pointer;
+    color: rgb(45, 164, 203);
+} 
+#title {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #333333da;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  position: relative;
+}
+#title p {
+  position: absolute;
+  font-size: 100px;
+  letter-spacing: 15px;
+  top:  5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white; /* Adjust text color as needed */
+          
+}
+#title div {
+  /* width: 50%; */
+  font-size: 150px;
+  height: auto;
+  display: block;
+}
+
+#abt {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  /* flex-direction: row; */
+  background: transparent;
+  font-size: 18px;
+  color: white;
+  text-align: left; /* Center text */
+  border-radius: 12px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.75);
+  padding: 10px 0px;/* Center the element */
+}
+#box {display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  gap: 10px 20px;
+  position: relative;
+}
+#box p {
+  background-color: #333;
+  color: #000000;
+  width: 175px;
+  height: 115px;
+  font-size: 50px;
+  text-transform: uppercase;
+  padding: 15px;
+}
+#box p span {
+  display: ruby;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+}
+#contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  background: transparent;
+  height: 100vh; /* Full viewport height */
+  padding: 0; 
+  position: relative;
+}
+
+#cont {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  /* flex-direction: row; */
+  background: transparent;
+  font-size: 18px;
+  color: white;
+  text-align: left; /* Center text */
+  border-radius: 12px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.75);
+  padding: 10px 0px;/* Center the element */
+}
+
+#form {
+  flex: 1;
+  margin: 10px 20px;
+}
+
+#form input, #form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc; /* Change as needed */
+}
+
+/* #form button {
+  padding: 10px 20px;
+  background-color: orange; /* Change as needed 
+  color: #fff; /* Change as needed
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+} */
+
+#info {
+  flex: 1;
+  margin: 0px 20px;
+}
+
+#info h4 {
+  font-size: 1.2em;
+  color:rgb(0, 0, 0);
+}
+/* 
+#info p {
+  font-size: 1em;
+  color: #ffffff; /* Change as needed 
+} */
+#projects {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  background: transparent;
+  height: 100vh; /* Full viewport height */
+  padding: 0; 
+  position: relative;
+}
+
+
+
+#events, #eventsad, #proj{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+  justify-content: space-between;
+  /* flex-direction: row; */
+  background: transparent;
+  font-size: 18px;
+  color: white;
+  text-align: left; /* Center text */
+  border-radius: 12px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.75);
+  padding: 10px 10px;/* Center the element */
+}
+#proji div {
+  flex: 1;
+  margin: 10px;
+  text-align: center;
+}
+
+#proji img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+#proji h4 {
+  font-size: 1.2em;
+  color: #961c1c; /* Change as needed */
+}
+
+#proji p {
+  font-size: 1em;
+  color: #000000; /* Change as needed */
+}
+
+#profilepic {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+#profilepic a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.2em;
+}
+
+#profilepic a:hover {
+  color: #007BFF;
+}
+
+#profilepic a img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+button {
+  border-radius: 20px;
+  border: 1px solid #00e2fb;
+  background-color: #57a4d4;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+button:hover {
+  background: linear-gradient(to right,  #ff007f, #bf31d4);
+}
+
+#gallery {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.gallery-slider {
+  width: 100%;
+  height: 400px;
+}
+
+
+.gallery-slider .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-slider .swiper-slide .image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.swiper-button-next,
+.swiper-button-prev{
+  color: white;
+}
+
+ .login-form{
+  position: absolute;
+  top: 115%;
+  right: -105%;
+  background: white;
+  border-radius: .5rem;
+  box-shadow:#2e2d2d55 10px 10px;
+  width: 10rem;
+  padding: 2rem;
+}
+
+ .login-form.active{
+  right: 2rem;
+  transition: .1s top;
+}
+
+.login-form h3{
+  font-size: 2.2rem;
+  color: black;
+  text-transform: uppercase;
+  margin-bottom: .7rem;
+  text-align: center;
+}

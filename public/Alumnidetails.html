@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni and Admission Details</title>
+
+    <link rel="stylesheet" href="css/ex.css">
+    <link rel="stylesheet" href="css/index.css"
+    <script src="js/script.js"></script>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li>
+        <a href="alumnidash.html">Home</a>
+      </li>
+      <li><a href="Alumnidetails.html">Carriers</a></li>
+    </ul>
+    <ul>
+      <li id="profilepic"><a href=""><img  src="images/PFP-modified.png" alt=""><span> Profile </span></a></li>
+    </ul>
+  </nav>
+  <div class="page-content">
+    <div class="form-v10-content">
+      <form class="form-detail" id="forme">
+        <div class="form-left">
+            <h2>Career Information</h2>
+            <div class="form-group">
+                <div class="form-row form-row-1">
+                    <input type="text" name="user_id" id="user_id" class="input-text" placeholder="User ID" required>
+                </div>
+                <div class="form-row form-row-2">
+                    <input type="text" name="name" id="name" class="input-text" placeholder="Name" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <input type="text" name="admin_id" class="admin_id" id="admin_id" placeholder="Institute" required>
+            </div>
+            <div class="form-group">
+                <div class="form-row form-row-1">
+                    <input type="text" name="accomplishments" id="accomplishments" class="input-text" placeholder="Accomplishments" required>
+                </div>
+                <div class="form-row form-row-2">
+                    <input type="text" name="experiences" id="experiences" class="input-text" placeholder="Experiences" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <input type="text" name="current_job" id="current_job" class="input-text" placeholder="Current Job" required>
+            </div>
+            <div class="form-row">
+                <input type="text" name="company_name" id="company_name" class="input-text" placeholder="Company Name" required>
+            </div>
+            <div class="form-row">
+                <input type="text" name="web_profile" id="web_profile" class="input-text" placeholder="Web Profile" required>
+            </div>
+            <div class="form-row-last" style="text-align: center; margin-bottom:10px;">
+              <button type="submit" id="btn">Submit</button> 
+              <button type="button" id="fetchBtn">Fetch Alumni Data</button>
+            <button type="button" id="updateBtn">Update Alumni Data</button>
+          </div>
+        </div>
+        
+        
+      </form>    
+    </div>
+  </div>
+  
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const alumniloginForm = document.getElementById('forme');
+          alumniloginForm.addEventListener('submit', (event) => {
+              event.preventDefault();
+              const formData = new FormData(alumniloginForm);
+              const userd = {};
+              formData.forEach((value, key) => {
+                  userd[key] = value;
+              });
+              submitForm(userd);
+              alumniloginForm.reset();
+          });
+
+          function submitForm(user) {
+              fetch('/api/job', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(user), // Use 'user' instead of 'formData'
+              })
+              .then(response => response.text())
+              .then(data => {
+                if(data == "success" || data == "exist"){
+                  alert("Error Occured");
+                }else{
+                  alert("Successfully Applied!");
+                  window.location.href='./alumnidash.html';
+                } 
+              }
+              )
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+          }
+      });
+      </script>
+      <script>
+        document.getElementById('fetchBtn').addEventListener('click', function() {
+          const alumniId = document.getElementById('user_id').value;
+          fetchAlumniData(alumniId);
+      });
+      document.getElementById('updateBtn').addEventListener('click', function() {
+        const alumniId = document.getElementById('user_id').value;
+        updateAlumniData(alumniId);
+    });
+        // Function to fetch data for editing
+function fetchAlumniData(id) {
+  fetch(`/api/alumni/${id}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch alumni data');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Populate the form fields with the fetched data
+      document.getElementById('name').value = data.Name;
+      document.getElementById('admin_id').value = data.admin_id;
+      document.getElementById('accomplishments').value = data.accomplishments;
+      document.getElementById('experiences').value = data.experiences;
+      document.getElementById('current_job').value = data.current_job;
+      document.getElementById('company_name').value = data.company_name;
+      document.getElementById('web_profile').value = data.web_profile;
+      document.getElementById('user_id').value = data.user_id && data.id;
+      document.getElementById('btn').style.display = 'none';
+    })
+    .catch(error => {
+      console.error('Error fetching alumni data:', error);
+      // Handle error gracefully
+    });
+}
+
+// Function to update data
+function updateAlumniData(id) {
+  // Collect updated data from form fields
+  const admin_id = document.getElementById('admin_id').value;
+  const accomplishments = document.getElementById('accomplishments').value;
+  const experiences = document.getElementById('experiences').value;
+  const current_job = document.getElementById('current_job').value;
+  const company_name = document.getElementById('company_name').value;
+  const web_profile = document.getElementById('web_profile').value;
+  const user_id = fetchAlumniData(id);
+
+  const formData = {
+    user_id,
+    name,
+    admin_id,
+    accomplishments,
+    experiences,
+    current_job,
+    company_name,
+    web_profile
+  };
+
+  fetch(`/api/alumni/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to update alumni data');
+      }
+      if(response.message=='Data updated successfully');
+      alert("Data updated successfully");
+      window.location.href = './alumnidash.html';
+      console.log('Alumni data updated successfully');
+      // Optionally, perform any further actions after successful update
+    })
+    .catch(error => {
+      alert(error);
+      console.error('Error updating alumni data:', error);
+      // Handle error gracefully
+    });
+}
+
+
+      </script>
+</body>
+</html>
+

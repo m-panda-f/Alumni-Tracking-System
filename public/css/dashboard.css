@@ -1,0 +1,131 @@
+body {
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom right,rgb(193, 157, 157),#8e8ef3,#6a85cd, #316dd4, #1a0e88);
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    padding: 10px;
+    text-align: center;
+    transition: background-color 0.3s;
+    /* background: linear-gradient(to right, #bf31d4, #ff007f); */
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+nav:hover::before {
+  top: 0;
+}
+nav::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff94; /* Change this to the desired color */
+  transition: top 1s;
+  z-index: -1;
+}
+a{
+  text-decoration: none;
+  font-size: 17px;
+  color: black;
+}
+nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+nav ul li a{
+    margin: 0 10px;
+    padding: 10px;
+    color: black;
+    font-size: 20px;
+    font-family: fantasy;
+    text-decoration: none;
+    transition: 0.5s;
+}a:hover{
+    color: rgb(45, 164, 203);
+}
+    #dashboard {
+      display: flex;
+      border-radius: 50px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      
+      /* Add this line */
+    }
+
+    #disp {
+      width: 400px; /* Adjust max-width as needed */
+      margin: 0 auto;
+      margin-right: 100px;
+      max-height: 200px; /* Set maximum height for the list */
+      overflow-y: auto; /* Add vertical scrollbar if needed */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px; /* Center the container */
+  }
+  #searchInput {
+    
+    padding: 10px;
+    top: 180px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: fixed;
+    
+}
+    #app {
+      width: 40%;
+    }
+    #alumniList {
+      margin-top: 20px;
+    }
+    #alumniList div {
+      margin: 10px 0;
+    }
+    #alumniList div span {
+      margin-right: 10px;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 9999;
+  }
+  button{
+    background-color:none;
+    border: none;
+    color: #000;
+    text-align: center;
+    padding: 10px 10px;
+  }
+  /* Styles for the overlay */
+  .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9998;
+  }

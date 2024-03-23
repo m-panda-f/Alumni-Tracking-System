@@ -3,25 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="shortcut icon" href="PFP-modified.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+  <link rel="shortcut icon" href="PFP1.png" type="image/x-icon">
   <title>Alumni Tracking System</title>
+  <style>
+    body {
+      transition: background 0.5s ease-in-out;
+  }
+  </style>
 </head>
-<body>
+<body ng-app="myapp" ng-controller="mycontroller">
   <nav>
     <ul>
       <li>
         <a href="index.html">Home</a>
       </li>
       <li>
-        <a href="login.html">login</a>
+        <a href="login.html">Login</a>
       </li>
       <li>
         <a href="register.html">Register</a>
       </li>
+      <li><a href="#event" ng-click="showSection('event')">Events</a></li>
+      <li><a href="#gallery" ng-click="showSection('gallery')">Gallery</a></li>
+      <li><a href="#contact" ng-click="showSection('contact')">Contact</a></li>
     </ul>
   </nav>
-<script src="script.js"></script>
+  <main>
+    <section ng-show="currentSection === 'home'">
+      <div id="projects">
+      <div id="title"><div>WELCOME</div><p>HOME</p></div>
+      <!-- discription -->
+      <!--about-->
+     </div>
+    </section>
+    <section id="event" ng-show="currentSection === 'event'" >
+      <div id="projects">
+        
+      <div id="title"><div>JOIN US</div><p>EVENTS</p></div>
+      <div id="proji" >
+        <div id="events">
+        </div>
+    </div>
+  </section>
+    <section id="gallery" class="gallery">
+      <div id="projects" ng-show="currentSection === 'gallery'">
+          <div id="title"><div>M E M O R I E S</div><p>GALLERY</p></div>
+            <div class="swiper gallery-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/2.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/!.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/NIE.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/3.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/4.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+          </div>
+        </div>
+  </section>
+    <section id="contact" ng-show="currentSection === 'contact'">
+      <div id="title"><div>GET IN TOUCH</div><p>CONTACT</p></div>
+          <div id="cont">
+              <section id="form">
+                  <form id="contact-form" >
+                      <input name="name" type="text" placeholder="Name">
+                      <input type="email" placeholder="Email" name="email">
+                      <textarea name="message"cols="30" rows="10" placeholder="Message"></textarea>
+                      <button type="submit">Send</button>
+                  </form>
+              </section>
+              <section id="info">
+                  <h4>Address</h4>
+                  <p >NIE (North Campus) Mysore</p>
+                  <h4>Email</h4>
+                  <p >atsinfo@gmail.com</p>
+                  <h4>Phone</h4>
+                  <p >+91 9916588232</p>
+              </section>
+          </div>
+  </section>
+  </main>
+  <script>
+    var swiper = new Swiper(".gallery-slider", {
+      grabCursor:true,
+      loop:true,
+      centeredSlides:true,
+      spaceBetween:20,
+      navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+      },
+      autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+      breakpoints: {
+          0:{
+              slidesPerView:1,
+          },
+          700:{
+              slidesPerView:2,
+          },
+      }
+  })
+  </script>
+  
+<script src="js/script.js"></script>
+<script>var app = angular.module('myapp', []);
+  app.controller('mycontroller', function($scope) {
+  $scope.currentSection = 'home';
+
+  $scope.showSection = function(section) {
+  $scope.currentSection = section;
+      };
+  });
+  emailjs.init("hecxcItnw-wJp3Wsy"); // Replace with your EmailJS user ID
+  document.querySelector('#contact-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var userEmail = document.querySelector('#contact-form input[name="email"]').value;
+  
+      emailjs.sendForm('service_i6f7mdu', 'template_3s0x4jm', this, {
+              reply_to: userEmail,
+              name: document.querySelector('#contact-form input[name="name"]').value,
+              message: document.querySelector('#contact-form input[name="message"]').value
+              })
+              .then(function() {
+                  alert('Email sent successfully!');
+              }, function(error) {
+                  console.log('Failed to send email: ' + error);
+              });
+          });</script>
+          
+            <script>
+              const gradientColors = [
+              'linear-gradient(to right, #3494e6, #ec6ead)',
+              'linear-gradient(to right, #fddb92, #d1fdff)',
+              'linear-gradient(to right, #ff7e5f, #feb47b)',
+              'linear-gradient(to right, #fad0c4, #ffd1ff)',
+              'linear-gradient(to right, #4dff4d, #3ea85b)',
+              'linear-gradient(to right, #4cb8c4, #3cd3ad)',
+              'linear-gradient(to right, #ffbb77, #ff9770)',
+              'linear-gradient(to right, #8e2de2, #4a00e0)',
+              'linear-gradient(to right, #ff85a2, #ffd3b6)',
+              'linear-gradient(to right, #0f2027, #203a43, #2c5364)'
+                  // Add more gradient colors as needed
+              ];
+      
+              function switchBackgroundColor() {
+                  const randomColorIndex = Math.floor(Math.random() * gradientColors.length);
+                  document.body.style.background = gradientColors[randomColorIndex];
+              }
+      
+              // Trigger the color change on page load or refresh
+              window.onload = switchBackgroundColor;
+              const anchorTags = document.querySelectorAll('a');
+            anchorTags.forEach(anchor => {
+            anchor.addEventListener('click', switchBackgroundColor);
+        });
+          </script>
 </body>
 </html>
 

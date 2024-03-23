@@ -7,12 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const password = document.getElementById("registerPassword").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
-  
-      if (password !== confirmPassword) {
-        alert("Passwords do not match");
-        registerForm.reset();
-        return;
-      }
       const formData = new FormData(registerForm);
       const userData = {};
       formData.forEach((value, key) => {
@@ -25,22 +19,29 @@ document.addEventListener('DOMContentLoaded', () => {
       registerForm.reset();
     });
   
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        registerForm.reset();
+        return;
+      }
+      else{function registerUser(userData) {
+        fetch('/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result.message);
+            alert("You have successfully registered");
+            window.location.href = '/details.html';
+            
+          });
+      }}
+      
     // API to register a new user
-    function registerUser(userData) {
-      fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result.message);
-          alert("You have successfully registered");
-          window.location.href = '/login.html';
-          
-        });
-    }
+    
   });
   

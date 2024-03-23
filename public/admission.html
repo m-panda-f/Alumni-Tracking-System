@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Details</title>
+    <link rel="stylesheet" href="admission.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+    <h2>Admission Details</h2>
+    <form id="admissionForm">
+        <div class="form-group">
+            <span for="usn">USN:</span>
+            <input class="form-field" type="text" id="usn">
+        </div>    
+        <div class="form-group">
+            <span for="instId">Institution Name:</span>
+            <input class="form-field" type="text" id="instId" required>
+        </div>
+        
+        <div class="form-group">
+            <span for="adm">Admission Mode:</span>
+            <select class="form-field" id="verificationStatus">
+                <option value="Management" selected>Management</option>
+                <option value="KEA">KEA(Government ceat)</option>
+                <option value="Comed-K">Comed-K</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <span for="admdate">Admission Date:</span>
+            <input class="form-field" type="date" id="admdate" name="admissiondate">
+        </div>
+        
+        <div class="form-group">
+            <span for="course">Course:</span>
+            <input class="form-field" type="text" id="course" name="course">
+        </div>
+
+        <div class="form-group">
+            <span for="graduationDate">Graduation date:</span>
+            <input class="form-field" type="date" id="graduationDate" name="graduation">
+        </div>
+        
+        <div class="form-group">
+            <span for="tc">Received TC:</span>
+            <input class="form-field" type="text" id="tc" name="tc">
+        </div>
+        
+        
+       
+        <button type="button" onclick="submitAdmissionDetails()">Submit</button>
+    </form>
+</div>
+    <script>
+        function submitAdmissionDetails() {
+           alert("Admission details submitted successfully!");
+           window.location.href = "Alumni.html";
+        }
+    </script>
+    <script>
+        const gradientColors = [
+        'linear-gradient(to right, #3494e6, #ec6ead)',
+        'linear-gradient(to right, #fddb92, #d1fdff)',
+        'linear-gradient(to right, #ff7e5f, #feb47b)',
+        'linear-gradient(to right, #fad0c4, #ffd1ff)',
+        'linear-gradient(to right, #4dff4d, #3ea85b)',
+        'linear-gradient(to right, #4cb8c4, #3cd3ad)',
+        'linear-gradient(to right, #ffbb77, #ff9770)',
+        'linear-gradient(to right, #8e2de2, #4a00e0)',
+        'linear-gradient(to right, #ff85a2, #ffd3b6)',
+        'linear-gradient(to right, #0f2027, #203a43, #2c5364)'
+            // Add more gradient colors as needed
+        ];
+
+        function switchBackgroundColor() {
+            const randomColorIndex = Math.floor(Math.random() * gradientColors.length);
+            document.body.style.background = gradientColors[randomColorIndex];
+        }
+
+        // Trigger the color change on page load or refresh
+        window.onload = switchBackgroundColor;
+        const anchorTags = document.querySelectorAll('a');
+      anchorTags.forEach(anchor => {
+      anchor.addEventListener('click', switchBackgroundColor);
+  });
+    </script>
+</body>
+</html>

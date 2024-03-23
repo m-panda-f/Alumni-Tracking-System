@@ -5,36 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="shortcut icon" href="PFP-modified.png" type="image/x-icon">
+  <link rel="shortcut icon" href="PFP1.png" type="image/x-icon">
 </head>
 <body>
     <nav>
-        <ul>
-          <li>
-            <a href="index.html">Home</a>
-          </li>
-          <li>
-            <a href="login.html">login</a>
-          </li>
-          <li>
-            <a href="register.html">Register</a>
-          </li>
-        </ul>
+      <ul>
+        <li>
+         <a href="index.html">Home</a>
+       </li>
+       <li>
+         <a href="login.html">Login</a>
+       </li>
+       <li>
+         <a href="register.html">Register</a>
+       </li>
+   
+     </ul>
       </nav>
       <div id="app">
   <h1>Register</h1>
   <form id="registerForm">
-    <input type="text" name="username" placeholder="Username" required>
-    <label for="registerEmail">Email:</label>
-    <input type="email" id="registerEmail" name="email" required>
-    <label for="registerPassword">Password:</label>
-    <input type="password" id="registerPassword" name="password" required>
-    <label for="confirmPassword">Confirm Password:</label>
-    <input type="password" id="confirmPassword" required>
+    <div class="form-group">
+      <span for="username">Username:</span>
+      <input class="form-field" type="text" id="username" name="username" placeholder="Username" required>
+  </div>
+  
+  <div class="form-group">
+      <span for="name">Name:</span>
+      <input class="form-field" type="text" id="name" name="name" required>
+  </div>
+  
+  <div class="form-group">
+      <span for="registerEmail">Email:</span>
+      <input class="form-field" type="email" id="registerEmail" name="email" required>
+      
+  </div>
+  
+  <div class="form-group">
+      <span for="registerPassword">Password:</span>
+      <input class="form-field" type="password" id="registerPassword" name="password" required>
+  </div>
+  
+  <div class="form-group">
+      
+      <input class="form-field" type="password" id="confirmPassword" required>
+      <span for="confirmPassword">Confirm Password:</span>
+  </div>
 
     <button type="submit">Register</button>
   </form>
 </div>
-  <script src="register.js"></script>
+  <script src="js/register.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const registerForm = document.getElementById('registerForm');
+    
+      registerForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+    
+        
+        const password = document.getElementById("registerPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+    
+        if (password !== confirmPassword) {
+          alert("Passwords do not match");
+          registerForm.reset();
+          return;
+        }
+        const formData = new FormData(registerForm);
+        const userData = {};
+        formData.forEach((value, key) => {
+          userData[key] = value;
+        });
+        // Register a new user
+        registerUser(userData);
+    
+        // Clear the form
+        registerForm.reset();
+      });
+    
+      // API to register a new user
+      function registerUser(userData) {
+        fetch('/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((response) => response.json())
+          .then(data => {
+            console.log(data.message);
+            if (data.message === 'You have successfully registered') {
+              alert('User registered successfully');
+              window.location.href = `/ex.html`;
+            }
+            else{
+              alert(`Error: ${data.sqlMessage}`);
+              alert('Username already exists');
+            }
+            
+          })
+      }
+    });
+    
+  </script>
+  <script>
+    const gradientColors = [
+    'linear-gradient(to right, #3494e6, #ec6ead)',
+    'linear-gradient(to right, #fddb92, #d1fdff)',
+    'linear-gradient(to right, #ff7e5f, #feb47b)',
+    'linear-gradient(to right, #fad0c4, #ffd1ff)',
+    'linear-gradient(to right, #4dff4d, #3ea85b)',
+    'linear-gradient(to right, #4cb8c4, #3cd3ad)',
+    'linear-gradient(to right, #ffbb77, #ff9770)',
+    'linear-gradient(to right, #8e2de2, #4a00e0)',
+    'linear-gradient(to right, #ff85a2, #ffd3b6)',
+    'linear-gradient(to right, #0f2027, #203a43, #2c5364)'
+        // Add more gradient colors as needed
+    ];
+
+    function switchBackgroundColor() {
+        const randomColorIndex = Math.floor(Math.random() * gradientColors.length);
+        document.body.style.background = gradientColors[randomColorIndex];
+    }
+
+    // Trigger the color change on page load or refresh
+    window.onload = switchBackgroundColor;
+    const anchorTags = document.querySelectorAll('a');
+  anchorTags.forEach(anchor => {
+  anchor.addEventListener('click', switchBackgroundColor);
+});
+</script>
 </body>
 </html>

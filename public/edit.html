@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Alumni</title>
+  <!-- Include any necessary stylesheets or scripts -->
+</head>
+<body>
+  <h1>Edit Alumni</h1>
+  <form class="form-detail" id="forme">
+    <div class="form-left">
+        <h2>Career Information</h2>
+        <div class="form-group">
+            <div class="form-row form-row-1">
+                <input type="text" name="user_id" id="user_id" class="input-text" placeholder="User ID" required>
+            </div>
+            <div class="form-row form-row-2">
+                <input type="text" name="name" id="name" class="input-text" placeholder="Name" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <input type="text" name="admin_id" class="admin_id" id="admin_id" placeholder="Institute" required>
+        </div>
+        <div class="form-group">
+            <div class="form-row form-row-1">
+                <input type="text" name="accomplishments" id="accomplishments" class="input-text" placeholder="Accomplishments" required>
+            </div>
+            <div class="form-row form-row-2">
+                <input type="text" name="experiences" id="experiences" class="input-text" placeholder="Experiences" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <input type="text" name="current_job" id="current_job" class="input-text" placeholder="Current Job" required>
+        </div>
+        <div class="form-row">
+            <input type="text" name="company_name" id="company_name" class="input-text" placeholder="Company Name" required>
+        </div>
+        <div class="form-row">
+            <input type="text" name="web_profile" id="web_profile" class="input-text" placeholder="Web Profile" required>
+        </div>
+        <div class="form-row-last" style="text-align: center; margin-bottom:10px;">
+          <button type="submit">Submit</button>
+      </div>
+    </div>
+    
+    
+  </form> 
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to fetch alumni data for editing
+      function fetchAlumniData(id) {
+        fetch(`/api/alumni/${id}`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to fetch alumni data');
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Populate the form fields with the fetched data
+            document.getElementById('name').value = data.name;
+            document.getElementById('admin_id').value = data.admin_id;
+            document.getElementById('accomplishments').value = data.accomplishments;
+            document.getElementById('experiences').value = data.experiences;
+            document.getElementById('current_job').value = data.current_job;
+            document.getElementById('company_name').value = data.company_name;
+            document.getElementById('web_profile').value = data.web_profile;
+          })
+          .catch(error => {
+            console.error('Error fetching alumni data:', error);
+            // Handle error gracefully
+          });
+      }
+      
+      // Function to update data
+      function updateAlumniData(id, formData) {
+        fetch(`/api/alumni/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to update alumni data');
+            }
+            console.log('Alumni data updated successfully');
+            // Optionally, perform any further actions after successful update
+          })
+          .catch(error => {
+            console.error('Error updating alumni data:', error);
+            // Handle error gracefully
+          });
+      }
+    });
+  </script>
+</body>
+</html>

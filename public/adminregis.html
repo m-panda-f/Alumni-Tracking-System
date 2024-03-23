@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Admin Registration</title>
+</head>
+<body>
+    <nav>
+        <ul>
+          <li>
+            <a href="dashboard.html">Home</a>
+          </li>
+          <li>
+            <a href="login.html">Login</a>
+          </li>
+          <li>
+            <a href="adminregis.html">Register</a>
+          </li>
+        </ul>
+      </nav>
+    <div id="app">
+    <h1>Admin Registration Form</h1>
+    <form id="adregisterForm">
+      <div class="form-group">
+          <span for="username">Admin_id:</span>
+          <input class="form-field" type="text" id="username" name="username" required><br>
+      </div>
+  
+      <div class="form-group">
+          <span for="name">Name:</span>
+          <input  class="form-field" type="text" id="name" name="name" required><br>
+      </div>
+  
+      <div class="form-group">
+          <span for="instid">Institute:</span>
+          <input class="form-field" type="text" id="instid" name="instid" required><br>
+      </div>
+  
+      <div class="form-group">
+          <span for="phnum">Email:</span>
+          <input class="form-field" type="email" id="phnum" name="phnum"><br>
+      </div>
+  
+      <div class="form-group">
+          <span for="noti">Notifications:</span>
+          <input class="form-field" type="text" id="email" name="noti" required><br>
+      </div>
+  
+      <div class="form-group">
+          <span for="verify">Verification:</span>
+          <input class="form-field" type="text" id="email" name="verify" required><br>
+      </div>
+  
+      <div class="form-group">
+          <span for="password">Password:</span>
+          <input class="form-field" type="password" id="registerPassword" name="password" required><br>
+      </div>
+  
+      <button type="submit">Register</button>
+  </form>
+  
+</div>
+    <script src="client.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const registerForm = document.getElementById('adregisterForm');
+      
+        registerForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+      
+          
+          
+          const formData = new FormData(registerForm);
+          const userData = {};
+          formData.forEach((value, key) => {
+            userData[key] = value;
+          });
+          // Register a new user
+          registerUser(userData);
+      
+          // Clear the form
+          registerForm.reset();
+        });
+      
+        // API to register a new user
+        function registerUser(userData) {
+          fetch('/api/adminregister', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              console.log(result.message);
+              alert("You have successfully registered");
+              window.location.href = '/login.html';
+              
+            });
+        }
+      });
+    </script>
+    <script>
+      const gradientColors = [
+      'linear-gradient(to right, #3494e6, #ec6ead)',
+      'linear-gradient(to right, #fddb92, #d1fdff)',
+      'linear-gradient(to right, #ff7e5f, #feb47b)',
+      'linear-gradient(to right, #fad0c4, #ffd1ff)',
+      'linear-gradient(to right, #4dff4d, #3ea85b)',
+      'linear-gradient(to right, #4cb8c4, #3cd3ad)',
+      'linear-gradient(to right, #ffbb77, #ff9770)',
+      'linear-gradient(to right, #8e2de2, #4a00e0)',
+      'linear-gradient(to right, #ff85a2, #ffd3b6)',
+      'linear-gradient(to right, #0f2027, #203a43, #2c5364)'
+          // Add more gradient colors as needed
+      ];
+
+      function switchBackgroundColor() {
+          const randomColorIndex = Math.floor(Math.random() * gradientColors.length);
+          document.body.style.background = gradientColors[randomColorIndex];
+      }
+
+      // Trigger the color change on page load or refresh
+      window.onload = switchBackgroundColor;
+      const anchorTags = document.querySelectorAll('a');
+    anchorTags.forEach(anchor => {
+    anchor.addEventListener('click', switchBackgroundColor);
+});
+  </script>
+</body>
+</html>

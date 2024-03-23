@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animal Management</title>
+
+</head>
+<style>
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.editBtn {
+  background-color: #008CBA;
+}
+
+.deleteBtn {
+  background-color: #f44336;
+}
+</style>
+<body>
+<div class="container">
+  <h1>Animal Management System</h1>
+  <input type="text" id="searchInput" placeholder="Search by animal name">
+  <button onclick="searchAnimal()">Search</button>
+  <table id="animalTable">
+    <thead>
+      <tr>
+        <th>Animal Name</th>
+        <th>Cage Number</th>
+        <th>Feed Number</th>
+        <th>Breed</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody id="animalsSection"></tbody>
+  </table>
+  <h2>Add New Animal</h2>
+  <form id="addAnimalForm">
+    <input type="hidden" id="editIndex"> <!-- Hidden field to store the index of the edited animal -->
+    <input type="text" id="animalName" placeholder="Event Title" required>
+    <input type="text" id="feedNumber" placeholder="Location" required>
+    <input type="date" id="cageNumber" placeholder="Date" required>
+    <textarea id="description" placeholder="Description" required></textarea>
+    <input type="file" id="imageFile" accept="image/*" required>
+    <button type="submit">Add Animal</button>
+  </form>
+</div>
+
+<script>
+const animalList = [];
+
+function addAnimal() {
+  const animalName = document.getElementById("animalName").value;
+  const cageNumber = document.getElementById("cageNumber").value;
+  const feedNumber = document.getElementById("feedNumber").value;
+  const description = document.getElementById("description").value;
+  const imageFile = document.getElementById("imageFile").files[0];
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const imageURL = event.target.result;
+    const animal = {
+      animalName,
+      feedNumber,
+      cageNumber,
+      
+      description,
+      imageURL
+      
+    };
+
+    // Send data to server
+    fetch("/addAnimals", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ animalName,  feedNumber, cageNumber, description, imageURL })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle response from server
+            console.log(data);
+            // Clear form fields after adding ticket
+            document.getElementById("addanimalForm").reset();
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    
+
+    // Check if editing an existing animal
+    const editIndex = document.getElementById("editIndex").value;
+    if (editIndex !== '') {
+      animalList[editIndex] = animal; // Update existing animal
+      document.getElementById("editIndex").value = ''; // Reset editIndex
+    } else {
+      animalList.push(animal); // Add new animal
+    }
+
+    displayAnimals();
+    document.getElementById("addAnimalForm").reset();
+  }; 
+  reader.readAsDataURL(imageFile);
+}
+
+function displayAnimals() {
+  fetch("/animals")
+    .then(response => response.json())
+    .then(data => {
+      let animalContainers = '';
+      data.forEach(animal => {
+        animalContainers += `
+          <div>
+            <img src="${animal.image}" alt="${animal.name}">
+            <h3>Event Title: ${animal.title}</h3>
+            <p>Location: ${animal.Location}</p>
+            <p>Date: ${animal.date}</p>
+            <p>Description: ${animal.description}</p>
+          </div>
+        `;
+      });
+
+      const animalsSection = document.getElementById("animalsSection");
+      animalsSection.innerHTML = animalContainers;
+    })
+    .catch(error => {
+      console.error("Error fetching animals:", error);
+    });
+}
+
+  
+  // Call the displayAnimals function when the page loads
+  displayAnimals();
+document.getElementById("addAnimalForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  addAnimal();
+  displayAnimals();
+});
+</script>
+</body>
+</html>

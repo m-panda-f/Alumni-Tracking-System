@@ -3,161 +3,301 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="shortcut icon" href="PFP-modified.png" type="image/x-icon">
-  <script src="script.js"></script>
-  <title>Dashboard</title>
-  <style>
-    #dashboard {
-      display: flex;
-      border-radius: 50px;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      
-      /* Add this line */
-    }
-
-    #disp {
-      width: 400px; /* Adjust max-width as needed */
-      margin: 0 auto;
-      margin-right: 100px;
-      max-height: 200px; /* Set maximum height for the list */
-      overflow-y: auto; /* Add vertical scrollbar if needed */
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 10px; /* Center the container */
-  }
-  #searchInput {
-    
-    padding: 10px;
-    top: 180px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    position: fixed;
-    
-}
-    #app {
-      width: 40%;
-    }
-    #alumniList {
-      margin-top: 20px;
-    }
-    #alumniList div {
-      margin: 10px 0;
-    }
-    #alumniList div span {
-      margin-right: 10px;
-    }
-    .popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #ffffff;
-      padding: 20px;
-      border: 1px solid #ccc;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      z-index: 9999;
-  }
-  button{
-    background-color:none;
-    border: none;
-    color: #000;
-    text-align: center;
-    padding: 10px 10px;
-  }
-  /* Styles for the overlay */
-  .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 9998;
-  }
-    </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <link rel="shortcut icon" href="PFP1.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="js/login.js"></script>
 </head>
-<body>
+<body ng-app="myapp" ng-controller="mycontroller">
   <nav>
     <ul>
       <li>
-        <a href="index.html">Home</a>
+        <a href="dashboard.html">Home</a>
       </li>
-      <li>
-        <a href="register.html">Register</a>
-      </li>
-      <li>
-        <a href="index.html">Logout</a>
-      </li>
+      <li><a href="#eventad" ng-click="showSection('eventadd')"> Add Events</a></li>
+      <li><a href="adminregis.html">Add Admin</a></li>
+      <li><a href="#event" ng-click="showSection('event')">Events</a></li>
+      <li><a href="#gallery" ng-click="showSection('gallery')">Gallery</a></li>
+      <li><a href="#ad" ng-click="showSection('add')">Alumni Details</a></li>
+      <li><a href="#veri" ng-click="showSection('verify')">Admin Details</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+    <ul>
+      <li id="profilepic"><a href=""><img  src="images/PFP-modified.png" alt=""><span> Profile </span></a></li>
+      <div class="login-form">
+        <div id="adminProfile" style="color: black;">
+        </div>
+      </div>
     </ul>
   </nav>
-  <div id="dashboard">
-    <div id="searchInput"><label for="in">Search: </label>
-    <input type="text"  id="search" placeholder="Search alumni" name="in"></div>
-    <div id="disp">
-      <div id="alumniList">
-        <!-- Alumni list will be displayed here  -->
-        </div>
+  <main>
+    <section ng-show="currentSection === 'home'">
+      <div id="projects">
+      <div id="title"><div>WELCOME</div><p>HOME</p></div>
+      <!-- discription -->    
+      <!--about-->
       
+      
+     </div>
+    </section>
+    <section id="event" ng-show="currentSection === 'event'">
+      <div id="projects" >
+        
+      <div id="title"><div>JOIN US</div><p>EVENTS</p></div>
+      <div id="proji" >
+        <div id="eventsad"></div>
+       
+      </div>
     </div>
-  <div id="app">
-    <h1>Alumni Tracking System</h1>
-    <form id="alumniForm">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
 
-      <label for="graduationYear">Graduation Year:</label>
-      <input type="number" id="graduationYear" name="graduationYear" required>
-
-      <label for="major">Major:</label>
-      <input type="text" id="major" name="major">
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-
-      <button type="submit" id="add">Add Alumni</button>
-    </form>
-
+  </section>
+  <section id="eventad" ng-show="currentSection === 'eventadd'">
+    <div id="projects"  >
+      <div id="title"><div>EVENTS</div><p>ADD</p></div>
+      <div id="app">
+        
+          <form id="addAnimalForm">
+            <div class="form-group">
+                <span for="animalName">Event Title:</span>
+                <input class="form-field" type="text" id="animalName" placeholder="Event Title" required><br>
+            </div>
+        
+            <div class="form-group">
+                <span for="feedNumber">Location:</span>
+                <input class="form-field" type="text" id="feedNumber" placeholder="Location" required><br>
+            </div>
+        
+            <div class="form-group">
+                <span for="cageNumber">Date:</span>
+                <input class="form-field" type="date" id="cageNumber" placeholder="Date" required><br>
+            </div>
+        
+            <div class="form-group">
+                <span for="description">Description:</span>
+                <textarea class="form-field" id="description" placeholder="Description" required></textarea><br>
+            </div>
+        
+            <div class="form-group">
+                <span for="imageFile">Image:</span>
+                <input class="form-field" type="file" id="imageFile" accept="image/*" required><br>
+            </div>
+        
+            <button type="submit">Add Event</button>
+        
+        
+        </form>
+      </div>
+  </section>
+  <section ng-show="currentSection === 'add'">
+    <div id="projects"  >
+      <div id="title"><div>DETAILS</div><p>USERS</p></div>
+      <div id="proj">
+        <div>
+          <div><h2>Alumni Details</h2></div>
+          <div class="form-group">
+            <span for="noti">Search:</span>
+            <input class="form-field" type="text" id="searchInput" placeholder="Name USN or UserID" oninput="filterAlumni()"><br>
+        </div>
+          <div id="alumniList">
+            
+          </div>
+        </div>
+        
+        <div>
+          <div><h2>Career Details</h2></div>
+          <div class="form-group">
+            <span for="noti">Search:</span>
+            <input class="form-field" type="text" id="searchnput" placeholder="Name USN or UserID" oninput="filtercare()"><br>
+        </div>
+          <div id="careList"></div>
+      </div>
+        
   </div>
-  
-  <div class="popup" id="popup">
-    <button onclick="closePopup()" style="background-color: red;">X</button>
-    <h2>Edit Alumni</h2>
-    <form id="alumniorm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name"><br><br>
-        <label for="graduationYear">Graduation Year:</label>
-        <input type="text" id="graduationYear" name="graduationYear"><br><br>
-        <label for="major">Major:</label>
-        <input type="text" id="major" name="major"><br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email"><br><br>
-        <input type="hidden" id="alumniId" name="id">
-        <button type="submit" id="add">Edit Alumni</button>
-    </form>
-    
-</div>
-<div class="overlay" id="overlay"></div>
-    <!-- Add content specific to the dashboard -->
-  <script src="script.js"></script>
+  </div>
+  </section>
+  <section ng-show="currentSection === 'verify'">
+    <div id="projects"  >
+      <div id="title"><div>DETAILS</div><p>ADMINS</p></div>
+      <div id="proj">
+        <div id="adminList"></div>
+      </div>
+  </div>
+  </section>
+    <section id="gallery" class="gallery">
+      <div id="projects" ng-show="currentSection === 'gallery'">
+          <div id="title"><div>M E M O R I E S</div><p>GALLERY</p></div>
+            <div class="swiper gallery-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/2.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/!.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/NIE.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/3.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide slide">
+                        <div class="image">
+                            <img src="images/4.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+          </div>
+        </div>
+
+  </main>
   <script>
-    async function openPopup() {
-      document.getElementById("popup").style.display = "block";
-      document.getElementById("overlay").style.display = "block";
-  }
+    var swiper = new Swiper(".gallery-slider", {
+      grabCursor:true,
+      loop:true,
+      centeredSlides:true,
+      spaceBetween:20,
+      navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+      },
+      autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+      breakpoints: {
+          0:{
+              slidesPerView:1,
+          },
+          700:{
+              slidesPerView:2,
+          },
+      }
+  })
+  </script>
+<script src="js/script.js"></script>
+<script>var app = angular.module('myapp', []);
+  app.controller('mycontroller', function($scope) {
+  $scope.currentSection = 'home';
 
-  // Function to close the popup
-  function closePopup() {
-      document.getElementById("popup").style.display = "none";
-      document.getElementById("overlay").style.display = "none";
-  }
+  $scope.showSection = function(section) {
+  $scope.currentSection = section;
+      };
+  });</script>
+  <script>
+    let login = document.querySelector(".login-form");
 
+document.querySelector("#profilepic").onclick = () =>{
+    login.classList.toggle('active');
+}
+  </script>
+  <script>
+    const gradientColors = [
+    'linear-gradient(to right, #3494e6, #ec6ead)',
+    'linear-gradient(to right, #fddb92, #d1fdff)',
+    'linear-gradient(to right, #ff7e5f, #feb47b)',
+    'linear-gradient(to right, #fad0c4, #ffd1ff)',
+    'linear-gradient(to right, #4dff4d, #3ea85b)',
+    'linear-gradient(to right, #4cb8c4, #3cd3ad)',
+    'linear-gradient(to right, #ffbb77, #ff9770)',
+    'linear-gradient(to right, #8e2de2, #4a00e0)',
+    'linear-gradient(to right, #ff85a2, #ffd3b6)',
+    'linear-gradient(to right, #0f2027, #203a43, #2c5364)'
+        // Add more gradient colors as needed
+    ];
+
+    function switchBackgroundColor() {
+        const randomColorIndex = Math.floor(Math.random() * gradientColors.length);
+        document.body.style.background = gradientColors[randomColorIndex];
+    }
+
+    // Trigger the color change on page load or refresh
+    window.onload = switchBackgroundColor;
+    const anchorTags = document.querySelectorAll('a');
+  anchorTags.forEach(anchor => {
+  anchor.addEventListener('click', switchBackgroundColor);
+});
+</script>
+<script>
+  function filterAlumni() {
+      // Get input value
+      var input = document.getElementById('searchInput').value.toLowerCase();
+      // Get alumni list container
+      var alumniList = document.getElementById('alumniList');
+      // Get all alumni items
+      var alumniItems = alumniList.getElementsByTagName('div');
+      
+      // Loop through all alumni items
+      for (var i = 0; i < alumniItems.length; i++) {
+          var textContent = alumniItems[i].textContent.toLowerCase();
+          
+          // Check if the input is found in the text content of the alumni item
+          if (textContent.includes(input)) {
+              alumniItems[i].style.display = '';
+          } else {
+              alumniItems[i].style.display = 'none';
+          }
+      }
+  }
+  function filtercare() {
+    // Get input value
+    var input = document.getElementById('searchnput').value.toLowerCase();
+    // Get alumni list container
+    var alumniList = document.getElementById('careList');
+    // Get all alumni items
+    var alumniItems = alumniList.getElementsByTagName('div');
+    
+    // Loop through all alumni items
+    for (var i = 0; i < alumniItems.length; i++) {
+        var textContent = alumniItems[i].textContent.toLowerCase();
+        
+        // Check if the input is found in the text content of the alumni item
+        if (textContent.includes(input)) {
+            alumniItems[i].style.display = '';
+        } else {
+            alumniItems[i].style.display = 'none';
+        }
+    }
+}
+  </script>
+  <script>
+    function displayEvents() {
+      fetch("/events")
+        .then(response => response.json())
+        .then(data => {
+          let eventContainers = '';
+          data.forEach(event => {
+            eventContainers += `
+              <div>
+                <img src="${event.image}" alt="">
+                <h3>Event Name: ${event.title}</h3>
+                <p>Date and Time: ${event.date}</p>
+                <p>Venue: ${event.Location}</p>
+                <button onclick="location.href='${event.registerLink}'">Register</button>
+              </div>
+            `;
+          });
+    
+          const eventsSection = document.getElementById("proj");
+          eventsSection.innerHTML = eventContainers;
+        })
+        .catch(error => {
+          console.error("Error fetching events:", error);
+        });
+    }
   </script>
 </body>
 </html>
