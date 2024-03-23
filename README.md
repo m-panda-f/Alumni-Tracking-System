@@ -1,4 +1,5 @@
-Alumni Tracking System
+**Alumni Tracking System**
+
 Welcome to the Alumni Tracking System repository! This system is designed to help track alumni data efficiently. Follow the instructions below to set up and run the program.
 
 Requirements
@@ -7,7 +8,7 @@ Before running the program, make sure you have the following dependencies instal
 express: Fast, unopinionated, minimalist web framework for Node.js
 express-fileupload: Simple express middleware for uploading files
 mysql2: MySQL client for Node.js
-body-parser: Node.js body parsing middleware
+body-parser: Node.js body-parsing middleware
 passport: Authentication middleware for Node.js
 passport-local: Passport strategy for authenticating with a username and password
 passport-jwt: Passport strategy for authenticating with a JSON Web Token (JWT)
